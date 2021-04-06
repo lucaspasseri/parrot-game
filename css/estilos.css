@@ -1,0 +1,41 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    background-color: #eef9bf;
+}
+div {
+    border: 1px solid red;
+}
+.topo {
+    display: flex;
+    justify-content: center;
+    height: 103px;
+    align-items:flex-end;
+}
+.titulo {
+    color: #75B79E;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 56px;
+    line-height: 66px;
+    letter-spacing: -0.004em;
+    white-space: nowrap;
+    overflow-x: hidden;
+}
+.jogo {
+    width: 100vw;
+    height: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.carta {
+    width: 117px;
+    height: 146px;
+    background-color: #a7e9af;
+    margin: 5px;
+    border-radius: 5px;
+}
