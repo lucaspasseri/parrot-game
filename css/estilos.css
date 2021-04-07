@@ -10,8 +10,7 @@ div {
 .topo {
     display: flex;
     justify-content: center;
-    height: 103px;
-    align-items:flex-end;
+    align-items: center;
 }
 .titulo {
     color: #75B79E;
@@ -22,11 +21,13 @@ div {
     line-height: 66px;
     letter-spacing: -0.004em;
     white-space: nowrap;
-    overflow-x: hidden;
+    margin: 40px 0 40px 0;
+}
+h1 {
+    text-align: center;
 }
 .jogo {
     width: 100vw;
-    height: 400px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -38,4 +39,17 @@ div {
     background-color: #a7e9af;
     margin: 5px;
     border-radius: 5px;
+}
+@media (max-width: 550px) {
+	.titulo {
+        font-size: 36px;
+        line-height: 42px;
+        white-space: normal;
+        margin-left: 120px;
+        margin-right: 120px;
+    }
+    .jogo {
+        flex-direction: column;
+        flex-wrap: nowrap;  
+    }
 }
