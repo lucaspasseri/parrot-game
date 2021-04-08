@@ -40,6 +40,12 @@ h1 {
     margin: 5px;
     border-radius: 5px;
 }
+
+.carta img {
+    height: 100px;
+    width: 100px;
+}
+
 @media (max-width: 550px) {
 	.titulo {
         font-size: 36px;
