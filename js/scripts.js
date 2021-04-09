@@ -7,7 +7,8 @@ while(!(numeroDeCartas % 2 === 0 && numeroDeCartas > 3 && numeroDeCartas < 15)){
 }
 
 const seletorCronometro = document.querySelector("span");
-let segundos = Number(seletorCronometro.innerHTML);
+
+let segundos = 1;
 
 function incrementarCronometro(){
     seletorCronometro.innerHTML = `${segundos++}`;
@@ -59,14 +60,12 @@ const seletorCartas = document.querySelectorAll(".carta");
 
 function virarCarta(carta, index){
     carta.classList.add("paraCima");
-    //carta.classList.add("rotacao-para-cima");
     carta.querySelector("img").setAttribute("src",srcImgsInGameArray[index]);
     contadorCartasViradas++; 
 }
 
 function desvirarCarta(carta){
     carta.classList.remove("paraCima");
-    //carta.classList.add("rotacao-para-baixo");
     carta.querySelector("img").setAttribute("src", "./imgs/front.png");
 }
 
@@ -112,7 +111,7 @@ function selecionarCarta(carta, index){
 
                     if(contadorCartasComPar === Number(numeroDeCartas)){
                         clearInterval(meuIntervalo);
-                        setTimeout(alert, 200, `Você ganhou com ${contadorCartasViradas} jogadas e em ${segundos}segundos`);           
+                        setTimeout(alert, 100, `Você ganhou com ${contadorCartasViradas} jogadas e em ${segundos}segundos`);          
                     } 
                 }
                 else {

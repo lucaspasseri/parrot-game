@@ -56,17 +56,6 @@ h1 {
     width: 100px;
 }
 
-.rotacao-para-cima {
-    transition: all .5s;
-    transform-style: preserve-3d;
-    transform: rotateY(180deg);
-}
-.rotacao-para-baixo {
-    transition: all .5s;
-    transform-style: preserve-3d;
-    transform: rotateY(-180deg);
-}
-
 .moldura {
     height: 30px;
     display: flex;
