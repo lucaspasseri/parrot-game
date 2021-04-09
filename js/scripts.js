@@ -1,5 +1,6 @@
-let numeroDeCartas = 
-prompt("Bem-vindo, com quantas cartas você gostaria de jogar? O Número inserido deve ser par entre 4 e 14.");
+/* let numeroDeCartas = 
+prompt("Bem-vindo, com quantas cartas você gostaria de jogar? O Número inserido deve ser par entre 4 e 14."); */
+let numeroDeCartas = 8;
 
 while(!(numeroDeCartas % 2 === 0 && numeroDeCartas > 3 && numeroDeCartas < 15)){
     numeroDeCartas = 
@@ -44,13 +45,20 @@ const seletorCartas = document.querySelectorAll(".carta");
 
 let numeroDeCartasSemPar = 0; // não pode ser maior que 2
 
+let contadorCartasViradas = 0;
+
+let contadorCartasComPar = 0;
+
 function virarCarta(carta, index){
     carta.classList.add("paraCima");
+    //carta.classList.add("rotacao-para-cima");
     carta.querySelector("img").setAttribute("src",srcImgsInGameArray[index]);
+    contadorCartasViradas++; 
 }
 
 function desvirarCarta(carta){
     carta.classList.remove("paraCima");
+    //carta.classList.add("rotacao-para-baixo");
     carta.querySelector("img").setAttribute("src", "./imgs/front.png");
 }
 
@@ -66,14 +74,16 @@ function selecionarCarta(carta, index){
     } else if (!carta.classList.contains("paraCima") &&  numeroDeCartasSemPar === 1 ) { // se a carta não esta para cima e tem uma carta semPar
         virarCarta(carta, index);
         //carta.classList.add("semPar");
-        //numeroDeCartasSemPar ++;
+        numeroDeCartasSemPar ++;
         for(let i = 0; i < numeroDeCartas; i++){ 
             if(seletorCartas[i].classList.contains("semPar")){ 
         
                 if(seletorCartas[i].querySelector("img").getAttribute("src") === 
                 carta.querySelector("img").getAttribute("src")){
                     seletorCartas[i].classList.replace("semPar","comPar");
+                    contadorCartasComPar++;
                     carta.classList.add("comPar");
+                    contadorCartasComPar++;
                     numeroDeCartasSemPar = 0;
                     
                 }
@@ -86,6 +96,10 @@ function selecionarCarta(carta, index){
                 }
             }
         }
+    }
+    if(contadorCartasComPar === numeroDeCartas){
+        setTimeout(alert, 100, `Você ganhou em ${contadorCartasViradas} jogadas!`);
+        
     } 
-
 }
+
