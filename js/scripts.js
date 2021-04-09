@@ -1,17 +1,25 @@
-/* let numeroDeCartas = 
-prompt("Bem-vindo, com quantas cartas você gostaria de jogar? O Número inserido deve ser par entre 4 e 14."); */
-let numeroDeCartas = 8;
+let numeroDeCartas = 
+prompt("Bem-vindo, com quantas cartas você gostaria de jogar? O Número inserido deve ser par entre 4 e 14.");
 
 while(!(numeroDeCartas % 2 === 0 && numeroDeCartas > 3 && numeroDeCartas < 15)){
     numeroDeCartas = 
     prompt("O Número inserido deve ser par entre 4 e 14. Com quantas cartas você gostaria de jogar?");
 }
 
+const seletorCronometro = document.querySelector("span");
+let segundos = Number(seletorCronometro.innerHTML);
+
+function incrementarCronometro(){
+    seletorCronometro.innerHTML = `${segundos++}`;
+}
+
+const meuIntervalo = setInterval(incrementarCronometro, 1000);
+
 const seletorJogo = document.querySelector(".jogo");
 
 for(let i = 0; i < numeroDeCartas; i++){
     seletorJogo.innerHTML += `<div class="carta" onclick="selecionarCarta(this, ${i})">
-                                 <img src="./imgs/front.png">     
+                                 <img src="./imgs/front.png" draggable="false">     
                               </div>`;
 }
 srcImgsArray = [
@@ -41,13 +49,13 @@ let srcImgsInGameArray = srcPairImgsArray.slice(0, numeroDeCartas);
 
 srcImgsInGameArray.sort(comparador);
 
-const seletorCartas = document.querySelectorAll(".carta");
-
-let numeroDeCartasSemPar = 0; // não pode ser maior que 2
+let numeroDeCartasSemPar = 0;
 
 let contadorCartasViradas = 0;
 
 let contadorCartasComPar = 0;
+
+const seletorCartas = document.querySelectorAll(".carta");
 
 function virarCarta(carta, index){
     carta.classList.add("paraCima");
@@ -64,42 +72,57 @@ function desvirarCarta(carta){
 
 function zerarNumeroDeCartasSemPar(){
     numeroDeCartasSemPar = 0;
+    ativarClicks();
+}
+
+function desativarClicks(){
+    for(let i = 0; i < numeroDeCartas; i++){
+        seletorCartas[i].removeAttribute("onclick");
+    }
+}
+
+function ativarClicks(){
+    for(let i = 0; i < numeroDeCartas; i++){
+        seletorCartas[i].setAttribute("onclick", `selecionarCarta(this, ${i})`);
+    }
 }
 
 function selecionarCarta(carta, index){
-    if(!carta.classList.contains("paraCima") && numeroDeCartasSemPar === 0){ //se a carta não esta para cima e nenhuma carta semPar
-        virarCarta(carta, index); // vira a carta
-        carta.classList.add("semPar"); // adiciona a classe semPar
-        numeroDeCartasSemPar ++; // número de cartas semPar incrementado
-    } else if (!carta.classList.contains("paraCima") &&  numeroDeCartasSemPar === 1 ) { // se a carta não esta para cima e tem uma carta semPar
-        virarCarta(carta, index);
-        //carta.classList.add("semPar");
+    if(!carta.classList.contains("paraCima") && numeroDeCartasSemPar === 0){
+        virarCarta(carta, index); 
+        carta.classList.add("semPar");
         numeroDeCartasSemPar ++;
+
+    } else if (!carta.classList.contains("paraCima") &&  numeroDeCartasSemPar === 1 ) {
+        virarCarta(carta, index);
+        numeroDeCartasSemPar ++;
+        desativarClicks();
+
         for(let i = 0; i < numeroDeCartas; i++){ 
             if(seletorCartas[i].classList.contains("semPar")){ 
-        
                 if(seletorCartas[i].querySelector("img").getAttribute("src") === 
                 carta.querySelector("img").getAttribute("src")){
                     seletorCartas[i].classList.replace("semPar","comPar");
                     contadorCartasComPar++;
                     carta.classList.add("comPar");
                     contadorCartasComPar++;
-                    numeroDeCartasSemPar = 0;
-                    
+                    setTimeout(zerarNumeroDeCartasSemPar, 1000);
+                    console.log(contadorCartasComPar);
+                    console.log(numeroDeCartas);
+
+                    if(contadorCartasComPar === Number(numeroDeCartas)){
+                        clearInterval(meuIntervalo);
+                        setTimeout(alert, 200, `Você ganhou com ${contadorCartasViradas} jogadas e em ${segundos}segundos`);           
+                    } 
                 }
-                else if(seletorCartas[i].querySelector("img").getAttribute("src") !== 
-                carta.querySelector("img").getAttribute("src")) {
+                else {
                     seletorCartas[i].classList.remove("semPar");
                     setTimeout(desvirarCarta, 1000, seletorCartas[i]);
                     setTimeout(desvirarCarta, 1000, carta);
-                    numeroDeCartasSemPar = 0;
+                    setTimeout(zerarNumeroDeCartasSemPar, 1000);
                 }
             }
         }
     }
-    if(contadorCartasComPar === numeroDeCartas){
-        setTimeout(alert, 100, `Você ganhou em ${contadorCartasViradas} jogadas!`);
-        
-    } 
 }
 

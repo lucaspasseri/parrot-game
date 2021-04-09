@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    user-select: none;
 }
 body {
     background-color: #eef9bf;
@@ -32,16 +33,22 @@ h1 {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    padding: 0 250px;
 }
 .carta {
     width: 117px;
     height: 146px;
     background-color: #a7e9af;
-    margin: 5px;
+    margin: 10px 10px;
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
+    user-select: none;
+}
+
+.carta:hover {
+    cursor: pointer;
 }
 
 .carta img {
@@ -58,6 +65,17 @@ h1 {
     transition: all .5s;
     transform-style: preserve-3d;
     transform: rotateY(-180deg);
+}
+
+.moldura {
+    height: 30px;
+    display: flex;
+    justify-content:flex-end;
+}
+
+.cronometro {
+    margin-right: 80px;
+    font-size: 30px;
 }
 
 @media (max-width: 550px) {
