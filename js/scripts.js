@@ -136,8 +136,8 @@ function selecionarCarta(carta, index) {
             clearInterval(meuIntervalo);
             setTimeout(
               alert,
-              100,
-              `Você ganhou com ${contadorCartasViradas} jogadas e em ${segundos}segundos`
+              1000,
+              `Você ganhou com ${contadorCartasViradas} jogadas e em ${--segundos}segundos`
             );
           }
         } else {
