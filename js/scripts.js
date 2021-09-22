@@ -1,38 +1,38 @@
-let numeroDeCartas = prompt(
+let cardsOnPlay = prompt(
   `Bem-vindo, com quantas cartas você gostaria de jogar?
    O Número inserido deve ser par entre 4 e 14.`
 );
 
-while (
-  !(numeroDeCartas % 2 === 0 && numeroDeCartas > 3 && numeroDeCartas < 15)
-) {
-  numeroDeCartas = prompt(
+while (!(cardsOnPlay % 2 === 0 && cardsOnPlay > 3 && cardsOnPlay < 15)) {
+  cardsOnPlay = prompt(
     `O Número inserido deve ser par entre 4 e 14. 
     Com quantas cartas você gostaria de jogar?`
   );
 }
 
-const seletorCronometro = document.querySelector("span");
+const timer = document.querySelector("span");
 
-let segundos = 1;
+let seconds = 1;
 
-function incrementarCronometro() {
-  seletorCronometro.innerHTML = `${segundos++}`;
+function incrementTimer() {
+  timer.innerHTML = `${seconds++}`;
 }
 
-const meuIntervalo = setInterval(incrementarCronometro, 1000);
+const timerInterval = setInterval(incrementTimer, 1000);
 
-const seletorJogo = document.querySelector(".game");
+const game = document.querySelector(".game");
 
-for (let i = 0; i < numeroDeCartas; i++) {
-  seletorJogo.innerHTML += `<div class="card" onclick="selecionarCarta(this, ${i})">
-                                <div class="front-face face">
-                                    <img src="./imgs/front.png">
-                                </div>
-                                <div class="back-face face">
-                                    <img/>
-                                </div>     
-                            </div>`;
+for (let i = 0; i < cardsOnPlay; i++) {
+  game.innerHTML += `
+    <div class="card" onclick="selectCard(this, ${i})">
+      <div class="front-face face">
+        <img src="./imgs/front.png">
+      </div>
+      <div class="back-face face">
+        <img/>
+      </div>     
+    </div>
+  `;
 }
 srcImgsArray = [
   "./imgs/bobrossparrot.gif",
@@ -44,11 +44,11 @@ srcImgsArray = [
   "./imgs/unicornparrot.gif",
 ];
 
-function comparador() {
+function shuffle() {
   return Math.random() - 0.5;
 }
 
-srcImgsArray.sort(comparador);
+srcImgsArray.sort(shuffle);
 
 let srcPairImgsArray = [];
 
@@ -57,94 +57,89 @@ for (let i = 0; i < srcImgsArray.length; i++) {
   srcPairImgsArray.push(srcImgsArray[i]);
 }
 
-let srcImgsInGameArray = srcPairImgsArray.slice(0, numeroDeCartas);
+let srcImgsInGameArray = srcPairImgsArray.slice(0, cardsOnPlay);
 
-srcImgsInGameArray.sort(comparador);
+srcImgsInGameArray.sort(shuffle);
 
-let numeroDeCartasSemPar = 0;
+let flippedCards = 0;
 
-let contadorCartasViradas = 0;
+let unpairedCards = 0;
 
-let contadorCartasComPar = 0;
+let pairedCards = 0;
 
-const seletorCartas = document.querySelectorAll(".card");
+const allCardsOnPlay = document.querySelectorAll(".card");
 
-function virarCarta(carta, index) {
-  carta.classList.add("paraCima");
-  carta
+function flippCard(card, index) {
+  card.classList.add("flipped-card");
+  card
     .querySelector(".back-face img")
     .setAttribute("src", srcImgsInGameArray[index]);
-  carta.querySelector(".front-face").style.transform = "rotateY(-180deg)";
-  carta.querySelector(".back-face").style.transform = "rotateY(0deg)";
-  contadorCartasViradas++;
+  card.querySelector(".front-face").style.transform = "rotateY(-180deg)";
+  card.querySelector(".back-face").style.transform = "rotateY(0deg)";
+  flippedCards++;
 }
 
-function desvirarCarta(carta) {
-  carta.classList.remove("paraCima");
-  carta.querySelector(".back-face").style.transform = "rotateY(180deg)";
-  carta.querySelector(".front-face").style.transform = "rotateY(0deg)";
+function unflippCard(card) {
+  card.classList.remove("flipped-card");
+  card.querySelector(".back-face").style.transform = "rotateY(180deg)";
+  card.querySelector(".front-face").style.transform = "rotateY(0deg)";
 }
 
-function zerarNumeroDeCartasSemPar() {
-  numeroDeCartasSemPar = 0;
-  ativarClicks();
+function resetUnpairedCards() {
+  unpairedCards = 0;
+  enableClicks();
 }
 
-function desativarClicks() {
-  for (let i = 0; i < numeroDeCartas; i++) {
-    seletorCartas[i].removeAttribute("onclick");
+function disableClicks() {
+  for (let i = 0; i < cardsOnPlay; i++) {
+    allCardsOnPlay[i].removeAttribute("onclick");
   }
 }
 
-function ativarClicks() {
-  for (let i = 0; i < numeroDeCartas; i++) {
-    seletorCartas[i].setAttribute("onclick", `selecionarCarta(this, ${i})`);
+function enableClicks() {
+  for (let i = 0; i < cardsOnPlay; i++) {
+    allCardsOnPlay[i].setAttribute("onclick", `selectCard(this, ${i})`);
   }
 }
 
-function selecionarCarta(carta, index) {
-  if (!carta.classList.contains("paraCima") && numeroDeCartasSemPar === 0) {
-    virarCarta(carta, index);
-    carta.classList.add("semPar");
-    numeroDeCartasSemPar++;
-  } else if (
-    !carta.classList.contains("paraCima") &&
-    numeroDeCartasSemPar === 1
-  ) {
-    virarCarta(carta, index);
-    numeroDeCartasSemPar++;
-    desativarClicks();
-    console.log(carta.querySelector(".back-face img").getAttribute("src"));
+function selectCard(card, index) {
+  if (!card.classList.contains("flipped-card") && unpairedCards === 0) {
+    flippCard(card, index);
+    card.classList.add("semPar");
+    unpairedCards++;
+  } else if (!card.classList.contains("flipped-card") && unpairedCards === 1) {
+    flippCard(card, index);
+    unpairedCards++;
+    disableClicks();
+    console.log(card.querySelector(".back-face img").getAttribute("src"));
 
-    for (let i = 0; i < numeroDeCartas; i++) {
-      if (seletorCartas[i].classList.contains("semPar")) {
+    for (let i = 0; i < cardsOnPlay; i++) {
+      if (allCardsOnPlay[i].classList.contains("semPar")) {
         if (
-          seletorCartas[i]
+          allCardsOnPlay[i]
             .querySelector(".back-face img")
             .getAttribute("src") ===
-          carta.querySelector(".back-face img").getAttribute("src")
+          card.querySelector(".back-face img").getAttribute("src")
         ) {
-          seletorCartas[i].classList.replace("semPar", "comPar");
-          contadorCartasComPar++;
-          carta.classList.add("comPar");
-          contadorCartasComPar++;
-          setTimeout(zerarNumeroDeCartasSemPar, 1000);
-          console.log(contadorCartasComPar);
-          console.log(numeroDeCartas);
+          allCardsOnPlay[i].classList.replace("semPar", "comPar");
+          pairedCards++;
+          card.classList.add("comPar");
+          pairedCards++;
+          setTimeout(resetUnpairedCards, 1000);
 
-          if (contadorCartasComPar === Number(numeroDeCartas)) {
-            clearInterval(meuIntervalo);
+          if (pairedCards === Number(cardsOnPlay)) {
+            clearInterval(timerInterval);
             setTimeout(
               alert,
               1000,
-              `Você ganhou com ${contadorCartasViradas} jogadas e em ${--segundos}segundos`
+              `Você ganhou com ${flippedCards} cartas viradas e em ${--seconds} segundos.`
             );
           }
         } else {
-          seletorCartas[i].classList.remove("semPar");
-          setTimeout(desvirarCarta, 1000, seletorCartas[i]);
-          setTimeout(desvirarCarta, 1000, carta);
-          setTimeout(zerarNumeroDeCartasSemPar, 1000);
+          allCardsOnPlay[i].classList.remove("semPar");
+          setTimeout(unflippCard, 1000, allCardsOnPlay[i]);
+          setTimeout(unflippCard, 1000, card);
+          setTimeout(resetUnpairedCards, 1000);
         }
       }
     }
