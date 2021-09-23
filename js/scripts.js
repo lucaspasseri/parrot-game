@@ -105,7 +105,7 @@ function enableClicks() {
 function selectCard(card, index) {
   if (!card.classList.contains("flipped-card") && unpairedCards === 0) {
     flippCard(card, index);
-    card.classList.add("semPar");
+    card.classList.add("unpaired");
     unpairedCards++;
   } else if (!card.classList.contains("flipped-card") && unpairedCards === 1) {
     flippCard(card, index);
@@ -114,32 +114,32 @@ function selectCard(card, index) {
     console.log(card.querySelector(".back-face img").getAttribute("src"));
 
     for (let i = 0; i < cardsOnPlay; i++) {
-      if (allCardsOnPlay[i].classList.contains("semPar")) {
+      if (allCardsOnPlay[i].classList.contains("unpaired")) {
         if (
           allCardsOnPlay[i]
             .querySelector(".back-face img")
             .getAttribute("src") ===
           card.querySelector(".back-face img").getAttribute("src")
         ) {
-          allCardsOnPlay[i].classList.replace("semPar", "comPar");
+          allCardsOnPlay[i].classList.replace("unpaired", "paired");
           pairedCards++;
-          card.classList.add("comPar");
+          card.classList.add("paired");
           pairedCards++;
-          setTimeout(resetUnpairedCards, 1000);
+          setTimeout(resetUnpairedCards, 600);
 
           if (pairedCards === Number(cardsOnPlay)) {
             clearInterval(timerInterval);
             setTimeout(
               alert,
-              1000,
+              600,
               `Você ganhou com ${flippedCards} cartas viradas e em ${--seconds} segundos.`
             );
           }
         } else {
-          allCardsOnPlay[i].classList.remove("semPar");
-          setTimeout(unflippCard, 1000, allCardsOnPlay[i]);
-          setTimeout(unflippCard, 1000, card);
-          setTimeout(resetUnpairedCards, 1000);
+          allCardsOnPlay[i].classList.remove("unpaired");
+          setTimeout(unflippCard, 600, allCardsOnPlay[i]);
+          setTimeout(unflippCard, 600, card);
+          setTimeout(resetUnpairedCards, 600);
         }
       }
     }
