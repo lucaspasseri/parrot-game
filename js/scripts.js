@@ -1,73 +1,85 @@
-let cardsOnPlay = prompt(
-  `Bem-vindo, com quantas cartas você gostaria de jogar?
-   O Número inserido deve ser par entre 4 e 14.`
-);
+let cardsOnPlay;
+let timer;
+let seconds;
+let timerInterval;
+let game;
+let srcImgsInGameArray;
 
-while (!(cardsOnPlay % 2 === 0 && cardsOnPlay > 3 && cardsOnPlay < 15)) {
-  cardsOnPlay = prompt(
-    `O Número inserido deve ser par entre 4 e 14. 
-    Com quantas cartas você gostaria de jogar?`
-  );
-}
-
-const timer = document.querySelector("span");
-
-let seconds = 1;
-
-function incrementTimer() {
-  timer.innerHTML = `${seconds++}`;
-}
-
-const timerInterval = setInterval(incrementTimer, 1000);
-
-const game = document.querySelector(".game");
-
-for (let i = 0; i < cardsOnPlay; i++) {
-  game.innerHTML += `
-    <div class="card" onclick="selectCard(this, ${i})">
-      <div class="front-face face">
-        <img src="./imgs/front.png">
-      </div>
-      <div class="back-face face">
-        <img/>
-      </div>     
-    </div>
-  `;
-}
-srcImgsArray = [
-  "./imgs/bobrossparrot.gif",
-  "./imgs/explodyparrot.gif",
-  "./imgs/fiestaparrot.gif",
-  "./imgs/metalparrot.gif",
-  "./imgs/revertitparrot.gif",
-  "./imgs/tripletsparrot.gif",
-  "./imgs/unicornparrot.gif",
-];
+let flippedCards;
+let unpairedCards;
+let pairedCards;
+let allCardsOnPlay;
 
 function shuffle() {
   return Math.random() - 0.5;
 }
 
-srcImgsArray.sort(shuffle);
+startGame();
 
-let srcPairImgsArray = [];
+function startGame() {
+  cardsOnPlay = prompt(
+    `Bem-vindo, com quantas cartas você gostaria de jogar?
+     O Número inserido deve ser par entre 4 e 14.`
+  );
 
-for (let i = 0; i < srcImgsArray.length; i++) {
-  srcPairImgsArray.push(srcImgsArray[i]);
-  srcPairImgsArray.push(srcImgsArray[i]);
+  while (!(cardsOnPlay % 2 === 0 && cardsOnPlay > 3 && cardsOnPlay < 15)) {
+    cardsOnPlay = prompt(
+      `O Número inserido deve ser par entre 4 e 14. 
+      Com quantas cartas você gostaria de jogar?`
+    );
+  }
+
+  timer = document.querySelector("span");
+  seconds = 0;
+  timerInterval = setInterval(incrementTimer, 1000);
+
+  game = document.querySelector(".game");
+  game.innerHTML = "";
+  for (let i = 0; i < cardsOnPlay; i++) {
+    game.innerHTML += `
+      <div class="card" onclick="selectCard(this, ${i})">
+        <div class="front-face face">
+          <img src="./imgs/front.png">
+        </div>
+        <div class="back-face face">
+          <img/>
+        </div>     
+      </div>
+    `;
+  }
+
+  const srcImgsArray = [
+    "./imgs/bobrossparrot.gif",
+    "./imgs/explodyparrot.gif",
+    "./imgs/fiestaparrot.gif",
+    "./imgs/metalparrot.gif",
+    "./imgs/revertitparrot.gif",
+    "./imgs/tripletsparrot.gif",
+    "./imgs/unicornparrot.gif",
+  ];
+
+  srcImgsArray.sort(shuffle);
+
+  let srcPairImgsArray = [];
+
+  for (let i = 0; i < srcImgsArray.length; i++) {
+    srcPairImgsArray.push(srcImgsArray[i]);
+    srcPairImgsArray.push(srcImgsArray[i]);
+  }
+
+  srcImgsInGameArray = srcPairImgsArray.slice(0, cardsOnPlay);
+  srcImgsInGameArray.sort(shuffle);
+
+  flippedCards = 0;
+  unpairedCards = 0;
+  pairedCards = 0;
+
+  allCardsOnPlay = document.querySelectorAll(".card");
 }
 
-let srcImgsInGameArray = srcPairImgsArray.slice(0, cardsOnPlay);
-
-srcImgsInGameArray.sort(shuffle);
-
-let flippedCards = 0;
-
-let unpairedCards = 0;
-
-let pairedCards = 0;
-
-const allCardsOnPlay = document.querySelectorAll(".card");
+function incrementTimer() {
+  timer.innerHTML = `${++seconds}`;
+}
 
 function flippCard(card, index) {
   card.classList.add("flipped-card");
@@ -102,6 +114,23 @@ function enableClicks() {
   }
 }
 
+function gameOver() {
+  clearInterval(timerInterval);
+  setTimeout(
+    alert,
+    400,
+    `Você ganhou com ${flippedCards} cartas viradas e em ${seconds} segundos.`
+  );
+
+  setTimeout(() => {
+    const response = confirm(`Você deseja jogar novamente?`);
+    if (response) {
+      timer.innerHTML = "0";
+      startGame();
+    }
+  }, 1000);
+}
+
 function selectCard(card, index) {
   if (!card.classList.contains("flipped-card") && unpairedCards === 0) {
     flippCard(card, index);
@@ -111,7 +140,6 @@ function selectCard(card, index) {
     flippCard(card, index);
     unpairedCards++;
     disableClicks();
-    console.log(card.querySelector(".back-face img").getAttribute("src"));
 
     for (let i = 0; i < cardsOnPlay; i++) {
       if (allCardsOnPlay[i].classList.contains("unpaired")) {
@@ -125,21 +153,16 @@ function selectCard(card, index) {
           pairedCards++;
           card.classList.add("paired");
           pairedCards++;
-          setTimeout(resetUnpairedCards, 600);
+          setTimeout(resetUnpairedCards, 400);
 
           if (pairedCards === Number(cardsOnPlay)) {
-            clearInterval(timerInterval);
-            setTimeout(
-              alert,
-              600,
-              `Você ganhou com ${flippedCards} cartas viradas e em ${--seconds} segundos.`
-            );
+            gameOver();
           }
         } else {
           allCardsOnPlay[i].classList.remove("unpaired");
-          setTimeout(unflippCard, 600, allCardsOnPlay[i]);
-          setTimeout(unflippCard, 600, card);
-          setTimeout(resetUnpairedCards, 600);
+          setTimeout(unflippCard, 400, allCardsOnPlay[i]);
+          setTimeout(unflippCard, 400, card);
+          setTimeout(resetUnpairedCards, 400);
         }
       }
     }
