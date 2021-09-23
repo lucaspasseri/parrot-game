@@ -25,9 +25,12 @@ $ google-chrome index.html
 
 # If you have firefox installed
 $ firefox index.html
+```
 
-### 	&#128736; Tech Stack
+### &#128736; Tech Stack
+
 Languages:<br>
+
 <p align="center">
     <img src="https://img.shields.io/badge/html5%20-%23E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white"/>
     <img src="https://img.shields.io/badge/css3%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white"/>
@@ -36,12 +39,11 @@ Languages:<br>
 <br>
 
 Version Control:<br>
+
 <p align="center">
     <img src="https://img.shields.io/badge/git%20-%23F05033.svg?&style=for-the-badge&logo=git&logoColor=white"/>
     <img src="https://img.shields.io/badge/github%20-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/>
 </p>
-
-
 
 ### Deploy
 
@@ -50,13 +52,15 @@ Version Control:<br>
 </p>
 
 The application layout is available on Vercel:
+
 <p align="center">
 	<a style='margin-left: 10px;' href='https://lucaspasseri.github.io/parrot-game/'><img src='https://img.shields.io/badge/github%20-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white'></a>
 </p>
 
-
 ### Author
+
 ---
+
 <p align='center'>
   Made by Lucas Passeri 👋🏽 Get in Touch! <br><br>
 	<table align="center">
@@ -72,4 +76,3 @@ The application layout is available on Vercel:
   		</tr>
 	</table>
 </p>
-```
