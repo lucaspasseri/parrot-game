@@ -1,82 +1,109 @@
 * {
-    box-sizing: border-box;
-    user-select: none;
+  box-sizing: border-box;
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 body {
-    background-color: #eef9bf;
+  background-color: #eef9bf;
 }
-div {
-    border: 1px solid red;
+
+.core {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  width: 100vw;
 }
-.topo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+.top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.titulo {
-    color: #75B79E;
-    font-family: 'Roboto', sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 56px;
-    line-height: 66px;
-    letter-spacing: -0.004em;
-    white-space: nowrap;
-    margin: 40px 0 40px 0;
+.title {
+  color: #75b79e;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 56px;
+  line-height: 66px;
+  letter-spacing: -0.004em;
+  white-space: nowrap;
+  margin: 40px 0 40px 0;
 }
 h1 {
-    text-align: center;
+  text-align: center;
 }
-.jogo {
-    width: 100vw;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 0 250px;
+.game {
+  width: 100vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
 }
-.carta {
-    width: 117px;
-    height: 146px;
-    background-color: #a7e9af;
-    margin: 10px 10px;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    user-select: none;
+.card {
+  width: 120px;
+  height: 150px;
+  position: relative;
+  margin: 10px;
 }
 
-.carta:hover {
-    cursor: pointer;
+.card:hover {
+  cursor: pointer;
 }
 
-.carta img {
-    height: 100px;
-    width: 100px;
+.card img {
+  height: 100%;
+  width: 100%;
 }
 
-.moldura {
-    height: 30px;
-    display: flex;
-    justify-content:flex-end;
+.face {
+  width: 100%;
+  height: 100%;
+  background-color: #a7e9af;
+  border-radius: 10px;
+  box-shadow: 1px 1px 1px 2px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  backface-visibility: hidden;
+  transition: all 0.5s;
+  transform-style: preserve-3d;
+  padding: 15px 6px;
 }
 
-.cronometro {
-    margin-right: 80px;
-    font-size: 30px;
+.back-face {
+  transform: rotateY(180deg);
+}
+
+.clock {
+  height: 30px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.time {
+  font-size: 30px;
+  color: #75b79e;
+}
+.seconds {
+  font-weight: bold;
 }
 
 @media (max-width: 550px) {
-	.titulo {
-        font-size: 36px;
-        line-height: 42px;
-        white-space: normal;
-        margin-left: 120px;
-        margin-right: 120px;
-    }
-    .jogo {
-        flex-direction: column;
-        flex-wrap: nowrap;  
-    }
+  .title {
+    font-size: 36px;
+    line-height: 42px;
+    white-space: normal;
+    margin-left: 120px;
+    margin-right: 120px;
+  }
+  .game {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
 }
