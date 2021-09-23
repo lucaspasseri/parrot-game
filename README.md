@@ -48,13 +48,13 @@ Version Control:<br>
 ### Deploy
 
 <p align="center">
-  <img src="/imgs/front.png" width="300" alt="parrot-game-view" />
+  <img src="/imgs/parrot-game-view.png" width="1000" alt="parrot-game-view" />
 </p>
 
-The application layout is available on Github Pages:
+The application is available on Github Pages, try it here:
 
 <p align="center">
-	<a style='margin-left: 10px;' href='https://lucaspasseri.github.io/parrot-game/'><img src='https://img.shields.io/badge/github%20-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white'></a>
+	<a style='margin-left: 10px;' href='https://lucaspasseri.github.io/parrot-game/'><img src='https://img.shields.io/badge/github--pages-Parrot%20Game-green'></a>
 </p>
 
 ### Author
